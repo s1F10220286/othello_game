@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styles from './index.module.css';
 
-
 const Home = () => {
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
