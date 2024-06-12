@@ -12,7 +12,6 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-
   const directions = [
     [-1, 1],
     [0, 1],
@@ -25,8 +24,36 @@ const Home = () => {
   ];
 
   const [turnColor, setTurnColor] = useState(1);
+
+  const checkGameEnd = (board: number[][]) => {
+    for (let y = 0; y < 8; y++) {
+      for (let x = 0; x < 8; x++) {
+        if (board[y][x] === 0) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const resetGame = () => {
+    setBoard([
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 2, 0, 0, 0],
+      [0, 0, 0, 2, 1, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+    ]);
+    setTurnColor(1);
+  };
+
   const clickCell = (x: number, y: number) => {
     const newBoard = JSON.parse(JSON.stringify(board));
+    let moved = false;
+
     if (newBoard[y][x] === 0) {
       for (const direction of directions) {
         for (let distance = 1; distance < 8; distance++) {
@@ -44,8 +71,7 @@ const Home = () => {
                 for (let back = distance; back >= 0; back--) {
                   newBoard[y + direction[0] * back][x + direction[1] * back] = turnColor;
                 }
-                setBoard(newBoard);
-                setTurnColor(3 - turnColor);
+                moved = true;
               }
               break;
             } else if (
@@ -57,10 +83,18 @@ const Home = () => {
           }
         }
       }
+
+      if (moved) {
+        setBoard(newBoard);
+        setTurnColor(3 - turnColor);
+        if (checkGameEnd(newBoard)) {
+          alert('終わりました');
+          resetGame();
+        }
+      }
     }
   };
 
-  // ここまで
   return (
     <div className={styles.container}>
       <div className={styles.board}>
@@ -80,5 +114,5 @@ const Home = () => {
     </div>
   );
 };
-// 誤って消してしまった場合用
+
 export default Home;
