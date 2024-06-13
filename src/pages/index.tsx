@@ -26,14 +26,22 @@ const Home = () => {
   const [turnColor, setTurnColor] = useState(1);
 
   const checkGameEnd = (board: number[][]) => {
+    let blackCount = 0;
+    let gameEnded = true;
     for (let y = 0; y < 8; y++) {
       for (let x = 0; x < 8; x++) {
         if (board[y][x] === 0) {
-          return false;
+          gameEnded = false;
+        } else if (board[y][x] === 1) {
+          blackCount++;
         }
       }
     }
-    return true;
+    if (gameEnded) {
+      alert(`終わりました。黒の合計枚数は ${blackCount} 枚です。`);
+      resetGame();
+    }
+    return gameEnded;
   };
 
   const resetGame = () => {
@@ -88,7 +96,7 @@ const Home = () => {
         setBoard(newBoard);
         setTurnColor(3 - turnColor);
         if (checkGameEnd(newBoard)) {
-          alert('終わりました');
+          alert('試合が終わりました');
           resetGame();
         }
       }
