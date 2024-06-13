@@ -27,6 +27,7 @@ const Home = () => {
 
   const checkGameEnd = (board: number[][]) => {
     let blackCount = 0;
+    let whiteCount = 0;
     let gameEnded = true;
     for (let y = 0; y < 8; y++) {
       for (let x = 0; x < 8; x++) {
@@ -34,11 +35,21 @@ const Home = () => {
           gameEnded = false;
         } else if (board[y][x] === 1) {
           blackCount++;
+        } else if (board[y][x] === 2) {
+          whiteCount++;
         }
       }
     }
     if (gameEnded) {
-      alert(`終わりました。黒の合計枚数は ${blackCount} 枚です。`);
+      let resultMessage = `黒の合計枚数は ${blackCount} 枚、白の合計枚数は ${whiteCount} 枚です。`;
+      if (blackCount > whiteCount) {
+        resultMessage += '黒の勝ちです。';
+      } else if (whiteCount > blackCount) {
+        resultMessage += '白の勝ちです。';
+      } else {
+        resultMessage += '引き分けです。';
+      }
+      alert(resultMessage);
       resetGame();
     }
     return gameEnded;
