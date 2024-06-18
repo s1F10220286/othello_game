@@ -24,6 +24,7 @@ const Home = () => {
   ];
 
   const [turnColor, setTurnColor] = useState(1);
+  const [gameResult, setGameResult] = useState('');
 
   const checkGameEnd = (board: number[][]) => {
     let blackCount = 0;
@@ -49,8 +50,7 @@ const Home = () => {
       } else {
         resultMessage += '引き分けです。';
       }
-      alert(resultMessage);
-      resetGame();
+      setGameResult(resultMessage);
     }
     return gameEnded;
   };
@@ -67,6 +67,7 @@ const Home = () => {
       [0, 0, 0, 0, 0, 0, 0, 0],
     ]);
     setTurnColor(1);
+    setGameResult('');
   };
 
   const clickCell = (x: number, y: number) => {
@@ -108,7 +109,6 @@ const Home = () => {
         setTurnColor(3 - turnColor);
         if (checkGameEnd(newBoard)) {
           alert('試合が終わりました');
-          resetGame();
         }
       }
     }
@@ -130,6 +130,10 @@ const Home = () => {
           )),
         )}
       </div>
+      {gameResult && <div className={styles.result}>{gameResult}</div>}
+      <button onClick={resetGame} className={styles.resetButton}>
+        ゲームをリセット
+      </button>
     </div>
   );
 };

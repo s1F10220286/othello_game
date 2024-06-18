@@ -141,3 +141,8 @@
   background-color: white;
   border-radius: 50%;
 }
+
+.resetButton {
+  height: 50px;
+  background-color: #52e8d1;
+}
