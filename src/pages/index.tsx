@@ -34,6 +34,10 @@ const Home = () => {
     }
   }, [turnColor, gameStarted]);
 
+
+
+
+  
   const checkGameEnd = (board) => {
     let blackCount = 0;
     let whiteCount = 0;
